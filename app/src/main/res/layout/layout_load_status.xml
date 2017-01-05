@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/load_status_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/dp_12"
+        android:drawableTop="@mipmap/ic_launcher"
+        android:gravity="center_horizontal"
+        android:textColor="@color/back_color"
+        android:textSize="@dimen/sp_14" />
+
+</LinearLayout>

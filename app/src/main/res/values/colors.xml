@@ -9,4 +9,9 @@
     <color name="toolbar_color">#f8f8f8</color>
     <color name="orange">#ff6636</color>
     <color name="back_color">#4e4e4e</color>
+
+    <color name="white">#ffffff</color>
+    <color name="gray">#d2d2d2</color>
+    <color name="gray_a">#bbbbbb</color>
+    <color name="background">#f0f0f0</color>
 </resources>
