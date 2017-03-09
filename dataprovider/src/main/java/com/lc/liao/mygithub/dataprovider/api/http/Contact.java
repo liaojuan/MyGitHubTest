@@ -9,4 +9,9 @@ public interface Contact {
      * 超时时间
      */
     long TIMEOUT = 10 * 1000;
+
+    /**
+     * 基础请求地址
+     */
+    String apiUrl = "";
 }
