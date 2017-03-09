@@ -14,7 +14,8 @@ import retrofit2.http.POST;
 public interface ApiInterfaces {
 
     /**
-     * 1 登录
+     * 1.登录
+     *
      * @param username
      * @param password
      * @return

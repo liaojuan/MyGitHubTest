@@ -6,5 +6,12 @@ package com.lc.liao.mygithub.dataprovider.api.http.base;
  */
 public interface HttpApi {
 
-    void login();
+    /**
+     * 1.登录
+     *
+     * @param username
+     * @param password
+     * @param callBack
+     */
+    void login(String username, String password, HttpRequestCallBack callBack);
 }

@@ -3,8 +3,10 @@ package com.lc.liao.mygithub.dataprovider.api.http.retrofitimpl;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.JsonObject;
 import com.lc.liao.mygithub.dataprovider.api.http.Contact;
 import com.lc.liao.mygithub.dataprovider.api.http.base.HttpApi;
+import com.lc.liao.mygithub.dataprovider.api.http.base.HttpRequestCallBack;
 import com.lc.liao.mygithub.dataprovider.api.preference.SharePreferenceApi;
 import com.lc.liao.mygithub.dataprovider.api.preference.SharePreferenceContact;
 import com.lc.liao.mygithub.dataprovider.api.util.APPUtil;
@@ -17,6 +19,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 
@@ -25,7 +29,7 @@ import retrofit2.Retrofit;
  */
 
 public class RetrofitApi implements HttpApi{
-    private Retrofit retroApi;
+    private Retrofit retrofit;
     private static RetrofitApi retrofitApi;
 
     public static RetrofitApi getInstall(Context context){
@@ -38,7 +42,7 @@ public class RetrofitApi implements HttpApi{
     private void initRetrofit(Context context){
         String accessToken = SharePreferenceApi.getInstall(context).getString(SharePreferenceContact.ACCESS_TOKEN, "");
         String appVersion = APPUtil.getAppVersion(context);
-        retroApi = new Retrofit.Builder().baseUrl(Contact.apiUrl).addConverterFactory(GsonConverterFactory.create()).client(genericClient(accessToken, appVersion)).build();
+        retrofit = new Retrofit.Builder().baseUrl(Contact.apiUrl).addConverterFactory(GsonConverterFactory.create()).client(genericClient(accessToken, appVersion)).build();
     }
 
     /**
@@ -80,8 +84,27 @@ public class RetrofitApi implements HttpApi{
         return httpClient;
     }
 
+    /**
+     * 1.登录
+     *
+     * @param username
+     * @param password
+     * @param callBack
+     */
     @Override
-    public void login() {
+    public void login(String username, String password, final HttpRequestCallBack callBack) {
+        ApiInterfaces apiInterfaces = retrofit.create(ApiInterfaces.class);
+        Call<JsonObject> call = apiInterfaces.login(username, password);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
+                if(callBack != null) callBack.onResponse(response.body());
+            }
 
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                if(callBack != null) callBack.onFailure(t);
+            }
+        });
     }
 }
